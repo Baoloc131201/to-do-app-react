@@ -7,10 +7,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 function App() {
-  const [toDo, setToDo] = useState([
-    { id: 2, title: "Task 2", status: false },
-    { id: 1, title: "Task 1", status: false },
-  ]);
+  const [toDo, setToDo] = useState(() => {
+    const storeToDo = JSON.parse(localStorage.getItem("tasks"));
+    return storeToDo ?? [];
+  });
 
   // temp state
   const [newTask, setNewTask] = useState("");
@@ -21,7 +21,12 @@ function App() {
     if (newTask) {
       let number = toDo.length + 1;
       let newEntry = { id: number, title: newTask, status: false };
-      setToDo([...toDo, newEntry]);
+      setToDo(() => {
+        const newToDo = [...toDo, newEntry];
+        localStorage.setItem("tasks", JSON.stringify(newToDo));
+        return newToDo;
+      });
+
       setNewTask("");
     }
   };
@@ -31,6 +36,7 @@ function App() {
     let newTask = toDo.filter((task) => {
       return task.id !== id;
     });
+    localStorage.setItem("tasks", JSON.stringify(newTask));
     setToDo(newTask);
   };
 
@@ -42,6 +48,7 @@ function App() {
       }
       return task;
     });
+    localStorage.setItem("tasks", JSON.stringify(newTask));
     setToDo(newTask);
   };
 
@@ -53,6 +60,8 @@ function App() {
   const updateTask = () => {
     let filterRecords = toDo.filter((task) => task.id !== updateData.id);
     let updatedObject = [...filterRecords, updateData];
+    localStorage.removeItem("tasks");
+    localStorage.setItem("tasks", JSON.stringify(updatedObject));
     setToDo(updatedObject);
     setUpdateData("");
   };
