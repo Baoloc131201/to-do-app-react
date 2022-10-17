@@ -3,8 +3,14 @@ import AddTaskForm from "./components/AddTaskForm";
 import ToDo from "./components/ToDo";
 import UpdateForm from "./components/UpdateForm";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import "./App.css";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Header from "./components/Header";
+import HomePage from "./components/HomePage";
+import AboutMe from "./components/AboutMe";
 
 function App() {
   const [toDo, setToDo] = useState(() => {
@@ -19,8 +25,20 @@ function App() {
   //Add task
   const addTask = () => {
     if (newTask) {
+      var today = new Date();
+      var time =
+        today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      var date =
+        "Day: " +
+        today.getDate() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getFullYear() +
+        "|| Time: " +
+        time;
       let number = toDo.length + 1;
-      let newEntry = { id: number, title: newTask, status: false };
+      let newEntry = { id: number, title: newTask, day: date, status: false };
       setToDo(() => {
         const newToDo = [...toDo, newEntry];
         localStorage.setItem("tasks", JSON.stringify(newToDo));
@@ -70,6 +88,7 @@ function App() {
     let newEntry = {
       id: updateData.id,
       title: e.target.value,
+      day: updateData.day,
       status: updateData.status ? true : false,
     };
     setUpdateData(newEntry);
@@ -77,33 +96,34 @@ function App() {
 
   return (
     <div className="container App">
-      <h2 className="animation-text">To Do App</h2>
-
-      {updateData ? (
-        <>
-          {/* Update Task */}
-          <UpdateForm
-            updateData={updateData}
-            changeTask={changeTask}
-            updateTask={updateTask}
-            cancelUpdate={cancelUpdate}
-          />
-        </>
-      ) : (
-        <AddTaskForm
-          newTask={newTask}
-          setNewTask={setNewTask}
-          addTask={addTask}
-        />
-      )}
-
-      {toDo && toDo.length ? "" : "No Task..."}
-      <ToDo
-        toDo={toDo}
-        markDone={markDone}
-        setUpdateData={setUpdateData}
-        deleteTask={deleteTask}
-      />
+      <Router>
+        <Header />
+        <div className="container App">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <HomePage
+                  updateData={updateData}
+                  changeTask={changeTask}
+                  updateTask={updateTask}
+                  cancelUpdate={cancelUpdate}
+                  newTask={newTask}
+                  setNewTask={setNewTask}
+                  addTask={addTask}
+                  toDo={toDo}
+                  markDone={markDone}
+                  setUpdateData={setUpdateData}
+                  deleteTask={deleteTask}
+                />
+              }
+            />
+            <Route path="/about" element={<AboutMe />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Routes>
+        </div>
+      </Router>
     </div>
   );
 }

@@ -19,6 +19,7 @@ const ToDo = ({ toDo, markDone, setUpdateData, deleteTask }) => {
                 <div className={task.status ? "done" : ""}>
                   <span className="taskNumber">{index + 1}</span>
                   <span className="taskText">{task.title}</span>
+                  <span className="tasktime">{task.day}</span>
                 </div>
 
                 <div className="iconsWrap">
@@ -37,6 +38,7 @@ const ToDo = ({ toDo, markDone, setUpdateData, deleteTask }) => {
                         setUpdateData({
                           id: task.id,
                           title: task.title,
+                          day: task.day,
                           status: task.status ? true : false,
                         })
                       }

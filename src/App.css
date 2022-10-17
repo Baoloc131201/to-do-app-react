@@ -95,6 +95,11 @@ button.btn.btn-lg.btn-success.mr-20 {
   opacity: 0.3;
   flex: 1;
 }
+.taskBg .done .tasktime{
+  text-decoration: line-through;
+  opacity: 0.3;
+  flex: 1;
+}
 .taskBg .taskText{
   flex: 1;
 }
@@ -114,4 +119,54 @@ button.btn.btn-lg.btn-success.mr-20 {
 }
 .taskBg .iconsWrap span:hover{
   color: yellow;
+}
+.login-title{
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #23a6d5;
+}
+.username-title{
+  color: #23a6d5;
+}
+.password-title{
+  color: #23a6d5;
+}
+.login-register{
+  color: #23a6d5;
+}
+.form-floating>label {
+  color: black;
+}
+.container-about{
+  width: 1000px;
+  background-color: #999;
+  display: flex;
+  margin: auto;
+  padding: 100px 40px;
+  border-radius: 20px;
+  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  /* flex-direction: column; */
+}
+.title-heading{
+  position: absolute;
+  left: 50%;
+  top: 5%;
+  transform:translateX(-50%);
+  font-size: 40px;
+  color: #27373d;
+ 
+}
+.context{
+  font-size: 25px;
+  color: black
+}
+.image-about{
+  width: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.container-desc__wrapper{
+  margin-top: 50px;
+  padding: 0 20px;
 }
